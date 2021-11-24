@@ -141,6 +141,14 @@ namespace Homework_6._6
             }
         }
 
+        public static string GenerateOutString(int id, string fio, int age, int height, DateTime dob, string hometown)
+        {
+            string date = DateTime.Now.ToShortDateString();
+            string time = DateTime.Now.ToShortTimeString();
+
+            string result = $"{id.ToString()}#{date} {time}#{fio}#{age.ToString()}#{height.ToString()}#{dob.ToShortDateString()}#{hometown}";
+            return result;
+        }
 
         static void Main(string[] args)
         {
@@ -154,7 +162,7 @@ namespace Homework_6._6
             char key;
 
             Console.SetWindowSize(180, 30);
-            Console.ForegroundColor = ConsoleColor.Red;
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("6.6 Домашняя работа\nПрограмма справочник «Сотрудники».\n");
             Console.ResetColor();
 
@@ -176,9 +184,7 @@ namespace Homework_6._6
                 else {
                     Console.ResetColor();
                     DisplayFile(ReadFile(path)); //вывод содержимого файла
-                }
-                
-                                
+                }               
             } else //если 2 начинаем вводить данные
             {
                 CreateDirectory(directory);
@@ -186,20 +192,8 @@ namespace Homework_6._6
 
                 do
                 {
-                    id = IdGenetrate(path);
-                    string note = id.ToString() + "#";
-                    Console.WriteLine($"ID: {id}");
-
-                    string now = DateTime.Now.ToShortDateString();
-                    Console.WriteLine($"Дата записи: {now}");
-                    note += $"{now} ";
-
-                    now = DateTime.Now.ToShortTimeString();
-                    Console.WriteLine($"Время записи: {now}");
-                    note += $"{now}#";
-
                     Console.WriteLine($"Введите ФИО: ");
-                    note += $"{Console.ReadLine()}#";
+                    string fio = $"{Console.ReadLine()}";
 
                     //проверка возраста
                     flag = default;
@@ -210,8 +204,6 @@ namespace Homework_6._6
                         input = Console.ReadLine();
                         flag = int.TryParse(input, out age);
                     }
-                    now = age.ToString();
-                    note += $"{now}#";
 
                     //проверка роста
                     flag = default;
@@ -222,9 +214,6 @@ namespace Homework_6._6
                         input = Console.ReadLine();
                         flag = int.TryParse(input, out height);
                     }
-                    now = height.ToString();
-                    //Console.WriteLine($"Рост: {now}");
-                    note += $"{now}#";
 
                     //проверка даты рождения
                     DateTime dob;
@@ -235,21 +224,17 @@ namespace Homework_6._6
                         date = Console.ReadLine();
                     }
                     while (!DateTime.TryParseExact(date, "dd.MM.yyyy", null, DateTimeStyles.None, out dob));
-                    now = dob.ToShortDateString();
-                    note += $"{now}#";
+                    
 
                     Console.WriteLine($"Введите место рождения: ");
-                    note += $"{Console.ReadLine()}\t";
+                    string hometown = $"{Console.ReadLine()}\t";
 
-                    WriteFile(path, note);
+                    WriteFile(path, GenerateOutString(IdGenetrate(path), fio, age, height, dob, hometown));
                     Console.Write("Продолжить y/n");
                     key = Console.ReadKey(true).KeyChar;
 
                 } while (char.ToLower(key) == 'y');
             }
-
-            
-
             Console.ReadKey();
         }
     }
