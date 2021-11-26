@@ -116,12 +116,23 @@ namespace Homework_6._6
         /// <param name="path">Путь к файлу</param>
         static public void CreateFile(string path)
         {
-            if (!File.Exists(path))
+            try
             {
+                //проверка на существование
+                if (File.Exists(path))
+                {
+                    return;
+                }
+
+                //пытаемся создать директорию
                 File.Create(path);
             }
+            catch (Exception e)
+            {
+                Console.WriteLine("Не удалось создать файл: {0}", e.ToString());
+            }
         }
-
+         
         static public void CreateDirectory(string path)
         {
             try
