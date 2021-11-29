@@ -164,8 +164,8 @@ namespace Homework_6._6
         static void Main(string[] args)
         {
             //определение переменных
-            string path = @"C:\123\db.txt";
-            string directory = @"C:\123";
+            string path = @"db.txt";
+            string directory = @"";
             bool flag = default;
             string input;
             int FirstInput = 3;
@@ -198,7 +198,7 @@ namespace Homework_6._6
                 }               
             } else //если 2 начинаем вводить данные
             {
-                CreateDirectory(directory);
+                //CreateDirectory(directory);
                 CreateFile(path);
 
                 do
